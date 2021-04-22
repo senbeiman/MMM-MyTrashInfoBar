@@ -3,6 +3,9 @@ Module.register("MMM-MyTrashInfoBar", {
 	defaults: {
 		updateInterval: 10 * 60 * 1000
 	},
+	getStyles: function () {
+		return ["font-awesome.css"];
+	},
 	// Define required scripts.
 	getScripts: function () {
 		return ["moment.js"];
@@ -20,7 +23,10 @@ Module.register("MMM-MyTrashInfoBar", {
 		}, this.config.updateInterval);
 	},
 
-	trashTypeFromDays: function (dayDiff) {
+	trashTypeText: function () {
+		var now = moment();
+		var ref = moment('2020-03-01');
+		var dayDiff = now.diff(ref, 'days');
 		if (dayDiff % 14 === 0) {
       return 'ビン・カン'
     } else if (dayDiff % 14 === 3) {
@@ -40,24 +46,19 @@ Module.register("MMM-MyTrashInfoBar", {
     } else if (dayDiff % 28 === 16) {
       return '本・雑誌・その他の紙・有害'
     } else {
-      return null
+      return 'なし'
     }
-	},
-
-	tomorrowTrashInfo: function () {
-		var now = moment();
-		var ref = moment('2020-03-01');
-		var dayDiff = now.diff(ref, 'days');
-		var trashType = this.trashTypeFromDays(dayDiff);
-		return trashType ? '明日は' + trashType + 'ゴミ収集日' : '明日はゴミ収集はありません'
 	},
 
 	// Override dom generator.
 	getDom: function () {
 		var wrapper = document.createElement("div");
-		wrapper.className = this.config.classes ? this.config.classes : "thin xlarge bright pre-line";
+		wrapper.className = this.config.classes ? this.config.classes : "thin medium bright";
 		// get the info text
-		var trashInfoText = this.tomorrowTrashInfo();
+		var trashInfoText = this.trashTypeText();
+		const symbol = document.createElement("span");
+		symbol.className = "fa fa-fw fa-trash";
+		wrapper.appendChild(symbol);
 		wrapper.appendChild(document.createTextNode(trashInfoText))
 
 		return wrapper;
