@@ -57,8 +57,8 @@ Module.register("MMM-MyTrashInfoBar", {
 		var wrapper = document.createElement("div");
 		wrapper.className = this.config.classes ? this.config.classes : "thin xlarge bright pre-line";
 		// get the info text
-		var complimentText = this.tomorrowTrashInfo();
-		wrapper.appendChild(complimentText)
+		var trashInfoText = this.tomorrowTrashInfo();
+		wrapper.appendChild(document.createTextNode(trashInfoText))
 
 		return wrapper;
 	},
