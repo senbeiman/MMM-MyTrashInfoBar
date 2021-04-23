@@ -58,6 +58,7 @@ Module.register("MMM-MyTrashInfoBar", {
 		var trashInfoText = this.trashTypeText();
 		const symbol = document.createElement("span");
 		symbol.className = "fa fa-fw fa-trash";
+		symbol.style.marginRight = "5px";
 		wrapper.appendChild(symbol);
 		wrapper.appendChild(document.createTextNode(trashInfoText))
 
